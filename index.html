@@ -8,7 +8,7 @@
   <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
-    function App() {
+    function MinutesToHours() {
       const [amount, setAmount] = React.useState(0);
       const [flipped, setFlipped] = React.useState(false);
       const onChange = (e) => {
@@ -24,7 +24,6 @@
       };
       return (
         <div>
-          <h1>Converter</h1>
           <div>
             <label htmlFor="minutes">Minutes</label>
             <input
@@ -51,6 +50,42 @@
           <button onClick={reset}>Reset</button>
           <button onClick={onFlip}>Flip</button>
         </div>
+      );
+    }
+
+    function KmToMiles() {
+      return (
+        <>
+          <h3>KM 2 M</h3>
+          <div>
+            <label>KM</label>
+            <input></input>
+          </div>
+          <div>
+            <label>M</label>
+            <input></input>
+          </div>
+          <button>Reset</button>
+          <button>Flip</button>
+        </>
+      );
+    }
+
+    function App() {
+      const [index, setIndex] = React.useState("1");
+      const onSelect = (e) => {
+        setIndex(e.target.value);
+      };
+      return (
+        <>
+          <h1>Converter</h1>
+          <select value={index} onChange={onSelect}>
+            <option value="0">Minutes & Hours</option>
+            <option value="1">Km & Miles</option>
+          </select>
+          <hr />
+          {index === "0" ? <MinutesToHours /> : <KmToMiles />}
+        </>
       );
     }
     const root = document.getElementById("root");

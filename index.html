@@ -54,19 +54,47 @@
     }
 
     function KmToMiles() {
+      const [conversion, setConbersion] = React.useState(0);
+      const [flipped, setFlipped] = React.useState(false);
+      const onChange = (e) => {
+        setConbersion(e.target.value);
+      };
+      const reset = () => {
+        setConbersion(0);
+      };
+
+      const onFlip = () => {
+        reset();
+        setFlipped((current) => !current);
+      };
       return (
         <>
           <h3>KM 2 M</h3>
           <div>
-            <label>KM</label>
-            <input></input>
+            <label htmlFor="km">KM</label>
+            <input
+              id="km"
+              value={flipped ? conversion / 1.609 : conversion}
+              placeholder="km"
+              type="number"
+              disabled={flipped}
+              onChange={onChange}
+            ></input>
           </div>
           <div>
-            <label>M</label>
-            <input></input>
+            <label htmlFor="m">M</label>
+            <input
+              value={flipped ? conversion : conversion * 1.60934}
+              id="m"
+              placeholder="m"
+              type="number"
+              disabled={!flipped}
+              onChange={onChange}
+            ></input>
           </div>
-          <button>Reset</button>
-          <button>Flip</button>
+
+          <button onClick={reset}>Reset</button>
+          <button onClick={onFlip}>Flip</button>
         </>
       );
     }

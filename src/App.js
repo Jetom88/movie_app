@@ -9,6 +9,8 @@ function App() {
   console.log("여러번!");
 
   useEffect(() => {
+    // 첫 번째 arg는 실행시키고 싶은 코드
+    // 두 번째([])는 dependencies(react가 지켜봐야하는 것) 변화할 때 react.js가 코드를 실행시킴
     console.log("한번만");
   }, []);
 
@@ -18,6 +20,9 @@ function App() {
     }
   }, [keyword]);
 
+  useEffect(() => {
+    console.log("[]안에 둘 중 하나가 바뀌면 실행되는 것");
+  }, [keyword, counter]);
   return (
     <div>
       <input

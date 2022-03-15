@@ -1,38 +1,35 @@
 import { useState, useEffect } from "react";
 
 function App() {
-  const [counter, setValue] = useState(0);
-  const [keyword, setKeyword] = useState("");
-  const onClick = () => setValue((prev) => prev + 1);
-  const onChange = (e) => setKeyword(e.target.value);
-
-  console.log("여러번!");
-
-  useEffect(() => {
-    // 첫 번째 arg는 실행시키고 싶은 코드
-    // 두 번째([])는 dependencies(react가 지켜봐야하는 것) 변화할 때 react.js가 코드를 실행시킴
-    console.log("한번만");
-  }, []);
-
-  useEffect(() => {
-    if (keyword !== "" && keyword.length > 5) {
-      console.log("search", keyword);
+  const [toDo, setToDo] = useState("");
+  const [toDos, setToDos] = useState([]);
+  const onChange = (e) => setToDo(e.target.value);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (toDo === "") {
+      return;
     }
-  }, [keyword]);
-
-  useEffect(() => {
-    console.log("[]안에 둘 중 하나가 바뀌면 실행되는 것");
-  }, [keyword, counter]);
+    setToDo("");
+    setToDos((currentArray) => [toDo, ...currentArray]);
+  };
   return (
     <div>
-      <input
-        value={keyword}
-        onChange={onChange}
-        type="text"
-        placeholder="Search here"
-      />
-      <h1>{counter}</h1>
-      <button onClick={onClick}>click</button>
+      <h1>My To Dos: {toDos.length}</h1>
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={onChange}
+          value={toDo}
+          type="text"
+          placeholder="write"
+        />
+        <button>Add To Do</button>
+      </form>
+      <hr />
+      <ul>
+        {toDos.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 }
